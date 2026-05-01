@@ -23,6 +23,9 @@ class LinkedListStudy {
       linkedlist.print();
       linkedlist.add(1, 5);
       linkedlist.print();
+      linkedlist.reverse();
+      linkedlist.print();
+
       Node res = linkedlist.find(3);
       if (res != null) {
           System.out.println(res.data);
@@ -35,6 +38,24 @@ class LinkedListStudy {
       } else {
           System.out.println("見つからない");
       }
+
+
+      LinkedListStudy linkedlist2 = new LinkedListStudy();
+      linkedlist2.add(1);
+      linkedlist2.add(2);
+      linkedlist2.add(3);
+      linkedlist2.add(4);
+      linkedlist2.add(5);
+      linkedlist2.add(6);
+      linkedlist2.add(7);
+      linkedlist2.add(8);
+      linkedlist2.add(9);
+      linkedlist2.add(10);
+
+      linkedlist2.print();
+
+      Node center = linkedlist2.center();
+      System.out.println(center.data);
     }
 
     void add(int data) {
@@ -93,6 +114,30 @@ class LinkedListStudy {
       return current;
     }
 
+    void reverse() {
+      Node prev = null;
+      Node current = head;
+      Node next;
+
+      while(current != null) {
+        next = current.next;
+        current.next = prev;
+        prev = current;
+        current = next;
+      }
+      head = prev;
+    }
+
+    Node center() {
+      Node fast = head;
+      Node slow = head;
+      while(fast.next != null && fast.next.next != null) {
+        fast = fast.next.next;
+        slow = slow.next;
+      }
+      return slow;
+    }
+
     void delete(int data) {
       if(head == null) return;
       
@@ -118,7 +163,7 @@ class LinkedListStudy {
             System.out.print(current.data + " -> ");
             current = current.next;
         }
-        System.out.println("null");
+        System.out.println(""); 
     }
 
     void printHead() {
