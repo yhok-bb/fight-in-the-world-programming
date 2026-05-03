@@ -51,8 +51,9 @@ class LinkedListStudy {
       linkedlist2.add(8);
       linkedlist2.add(9);
       linkedlist2.add(10);
-
       linkedlist2.print();
+      boolean hasCycle = linkedlist2.hasCycle();
+      System.out.println(hasCycle);
 
       Node center = linkedlist2.center();
       System.out.println(center.data);
@@ -136,6 +137,19 @@ class LinkedListStudy {
         slow = slow.next;
       }
       return slow;
+    }
+
+    boolean hasCycle() {
+      Node fast = head;
+      Node slow = head;
+
+      while(fast != null && fast.next != null) {
+        fast = fast.next.next;
+        slow = slow.next;
+
+        if(fast == slow) return true;
+      }
+      return false;
     }
 
     void delete(int data) {
