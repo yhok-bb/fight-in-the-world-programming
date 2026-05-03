@@ -57,6 +57,17 @@ class LinkedListStudy {
 
       Node center = linkedlist2.center();
       System.out.println(center.data);
+      System.out.println(linkedlist2.isPalindrome()); // 回文(false)
+
+      // 回文(true)
+      LinkedListStudy pal1 = new LinkedListStudy();
+      pal1.add(1);
+      pal1.add(3);
+      pal1.add(5);
+      pal1.add(3);
+      pal1.add(1);
+
+      System.out.println(pal1.isPalindrome());
     }
 
     void add(int data) {
@@ -129,6 +140,19 @@ class LinkedListStudy {
       head = prev;
     }
 
+    Node reverse(Node head) {
+      Node prev = null;
+      Node current = head;
+
+      while (current != null) {
+        Node next = current.next;
+        current.next = prev;
+        prev = current;
+        current = next;
+      }
+      return prev;
+    }
+
     Node center() {
       Node fast = head;
       Node slow = head;
@@ -150,6 +174,25 @@ class LinkedListStudy {
         if(fast == slow) return true;
       }
       return false;
+    }
+
+    boolean isPalindrome() {
+      Node left = center();
+      Node right = reverse(left.next);
+
+      Node p1 = head;
+      Node p2 = right;
+
+      while (p2 != null) {
+        if (p1.data != p2.data) return false;
+        p1 = p1.next;
+        p2 = p2.next;
+      }
+
+      // 戻す
+      left.next = reverse(right);
+
+      return true;
     }
 
     void delete(int data) {
