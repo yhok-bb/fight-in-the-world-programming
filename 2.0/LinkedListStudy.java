@@ -68,6 +68,28 @@ class LinkedListStudy {
       pal1.add(1);
 
       System.out.println(pal1.isPalindrome());
+
+      // merge
+      LinkedListStudy list1 = new LinkedListStudy();
+      list1.add(1);
+      list1.add(3);
+      list1.add(5);
+
+      LinkedListStudy list2 = new LinkedListStudy();
+      list2.add(2);
+      list2.add(4);
+      list2.add(6);
+
+      // マージ
+      Node mergedHead = list1.merge(list1.head, list2.head);
+
+      // 結果を表示
+      Node current = mergedHead;
+      while (current != null) {
+          System.out.print(current.data + " -> ");
+          current = current.next;
+      }
+      System.out.println("null");
     }
 
     void add(int data) {
@@ -193,6 +215,24 @@ class LinkedListStudy {
       left.next = reverse(right);
 
       return true;
+    }
+
+    Node merge(Node l1, Node l2) {
+      Node dummy = new Node(0);
+      Node tail = dummy;
+      while(l1 != null && l2 != null) {
+        if(l1.data < l2.data) {
+          tail.next = l1;
+          tail = tail.next;
+          l1 = l1.next;
+        } else {
+          tail.next = l2;
+          tail = tail.next;
+          l2 = l2.next;
+        }
+      }
+      tail.next = (l1 != null) ? l1 : l2;
+      return dummy.next;
     }
 
     void delete(int data) {
