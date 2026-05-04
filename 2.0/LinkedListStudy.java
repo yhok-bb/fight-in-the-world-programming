@@ -90,6 +90,39 @@ class LinkedListStudy {
           current = current.next;
       }
       System.out.println("null");
+
+      // intersection
+      LinkedListStudy listA = new LinkedListStudy();
+      listA.add(1);
+      listA.add(2);
+      listA.add(3);
+
+      LinkedListStudy listB = new LinkedListStudy();
+      listB.add(4);
+      listB.add(5);
+
+      // 共通部分作る
+      Node common = new Node(7);
+      common.next = new Node(8);
+      common.next.next = new Node(9);
+
+      // Aの末尾に接続
+      Node curA = listA.head;
+      while (curA.next != null) curA = curA.next;
+      curA.next = common;
+
+      // Bの末尾に接続
+      Node curB = listB.head;
+      while (curB.next != null) curB = curB.next;
+      curB.next = common;
+
+      // テスト
+      Node intersection = listA.getIntersection(listA.head, listB.head);
+      if (intersection != null) {
+          System.out.println(intersection.data); // 7
+      } else {
+          System.out.println("交差なし");
+      }
     }
 
     void add(int data) {
@@ -233,6 +266,49 @@ class LinkedListStudy {
       }
       tail.next = (l1 != null) ? l1 : l2;
       return dummy.next;
+    }
+
+    Node getIntersection(Node headA, Node headB) {
+      int l1 = 0;
+      int l2 = 0;
+
+      Node lenA = headA;
+      while(lenA != null) {
+        l1 += 1;
+        lenA = lenA.next;
+      }
+      Node lenB = headB;
+      while(lenB != null) {
+        l2 += 1;
+        lenB = lenB.next;
+      }
+
+      int diff = Math.abs(l1-l2);
+      Node p1 = headA;
+      Node p2 = headB;
+
+      if (l1 > l2) {
+        for (int i = 0; i < diff; i++) p1 = p1.next;
+      } else {
+        for (int i = 0; i < diff; i++) p2 = p2.next;
+      }
+
+      while (p1 != null && p2 != null) {
+        if (p1 == p2) return p1;
+        p1 = p1.next;
+        p2 = p2.next;
+      }
+      return null;
+
+      // 入れ替え法というものがあるらしい。賢い
+      // Node p1 = headA;
+      // Node p2 = headB;
+
+      // while (p1 != p2) {
+      //     p1 = (p1 == null) ? headB : p1.next;
+      //     p2 = (p2 == null) ? headA : p2.next;
+      // }
+      // return p1;
     }
 
     void delete(int data) {
